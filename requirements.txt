@@ -3,6 +3,7 @@ pandas
 numpy
 scikit-learn
 gspread
+gunicorn
 plotly
 gspread
 oauth2client
