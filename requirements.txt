@@ -6,4 +6,3 @@ gspread
 plotly
 gspread
 oauth2client
-gunicorn
