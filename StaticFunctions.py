@@ -14,7 +14,7 @@ def load_data() -> pd.DataFrame:
 
     fil = os.environ['GOOGLE_CREDENTIALS']
     print('\n\n\n\n\n')
-    print(json.load(fil))
+    print(fil)
     print('\n\n\n\n\n')
 
     creds = ServiceAccountCredentials.from_json_keyfile_name(fil, scope)
