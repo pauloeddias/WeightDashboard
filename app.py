@@ -100,4 +100,4 @@ def update_figure(start_date=date_min, end_date=date_max):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
