@@ -17,8 +17,8 @@ def load_data() -> pd.DataFrame:
     print(fil)
     print('\n\n\n\n\n')
 
-    creds = ServiceAccountCredentials.from_json(fil, scope)
-    # creds = ServiceAccountCredentials.from_json(fil,scope)
+    # creds = ServiceAccountCredentials.from_json_keyfile_name(fil, scope)
+    creds = ServiceAccountCredentials.from_json(fil)
 
     client = gspread.authorize(creds)
     sheet = client.open('Body Index')
