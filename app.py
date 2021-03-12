@@ -19,6 +19,9 @@ date_max = df.index[-1]
 d2 = resample_every_day(df)
 d2 = months_to_goal_fat_percentage(goal_percentage=8, df=d2)
 
+weight = make_line_plot(x=df.index, y=df['weight'], title='Weight', xaxis_title='Date',
+                        yaxis_title="Weight (Kg)")
+
 fat_percentage = make_line_plot(x=df.index, y=df['fat_percentage'], title='Fat Percentage', xaxis_title='Date',
                                 yaxis_title="Fat Percentage")
 muscle_percentage = make_line_plot(x=df.index, y=df['muscle_percentage'], title='Muscle Percentage', xaxis_title='Date',
@@ -45,6 +48,10 @@ app.layout = html.Div(children=[
     ),
     html.Div([
         dcc.Graph(
+            id='weight',
+            figure=weight
+        ),
+        dcc.Graph(
             id='fat_percentage',
             figure=fat_percentage
         ),
@@ -52,7 +59,6 @@ app.layout = html.Div(children=[
             id='muscle_percentage',
             figure=muscle_percentage
         ),
-
         dcc.Graph(
             id='fat_mass',
             figure=fat_mass
@@ -72,7 +78,8 @@ app.layout = html.Div(children=[
 
 
 @app.callback(
-    [dash.dependencies.Output('fat_percentage', 'figure'),
+    [dash.dependencies.Output('weight', 'figure'),
+     dash.dependencies.Output('fat_percentage', 'figure'),
      dash.dependencies.Output('fat_mass', 'figure'),
      dash.dependencies.Output('muscle_percentage', 'figure'),
      dash.dependencies.Output('muscle_mass', 'figure'),
@@ -93,11 +100,13 @@ def update_figure(start_date=date_min, end_date=date_max):
                         yaxis_title="Fat Mass (Kg)")
     mm = make_line_plot(x=filtered_df.index, y=filtered_df['muscle_mass'], title='Muscle Mass', xaxis_title='Date',
                         yaxis_title="Muscle Mass (Kg)")
+    we = make_line_plot(x=filtered_df.index, y=filtered_df['weight'], title='Weight', xaxis_title='Date',
+                        yaxis_title="Weight (Kg)")
     mtgp = make_line_plot(x=month_df.index, y=month_df['months_to_goal_percentage'], mode='markers',
                           title='Months To Goal Percentage', xaxis_title='Date',
                           yaxis_title="Months To Goal Percentage")
 
-    return fp, fm, mp, mm, mtgp
+    return we, fp, fm, mp, mm, mtgp
 
 
 if __name__ == '__main__':
