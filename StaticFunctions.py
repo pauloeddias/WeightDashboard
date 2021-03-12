@@ -11,7 +11,12 @@ from sklearn.linear_model import LinearRegression
 def load_data() -> pd.DataFrame:
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name(os.environ['GOOGLE_APPLICATION_CREDENTIALS'], scope)
+    fil = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+    print('\n\n\n\n\n')
+    print(fil)
+    print('\n\n\n\n\n')
+
+    creds = ServiceAccountCredentials.from_json_keyfile_name(fil, scope)
 
     client = gspread.authorize(creds)
     sheet = client.open('Body Index')
