@@ -12,13 +12,13 @@ import json
 def load_data() -> pd.DataFrame:
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-    fil = os.environ['GOOGLE_CREDENTIALS']
+    fil = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
     print('\n\n\n\n\n')
     print(fil)
     print('\n\n\n\n\n')
 
-    # creds = ServiceAccountCredentials.from_json_keyfile_name(fil, scope)
-    creds = ServiceAccountCredentials.from_json(fil)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(fil, scope)
+    # creds = ServiceAccountCredentials.from_json(fil)
 
     client = gspread.authorize(creds)
     sheet = client.open('Body Index')
