@@ -11,7 +11,7 @@ from sklearn.linear_model import LinearRegression
 def load_data() -> pd.DataFrame:
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 
-    creds = ServiceAccountCredentials.from_json_keyfile_name(os.environ['GOOGLE_APPLICATION_CREDENTIALS'], scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(os.environ['WEIGHT_DASHBOARD_CREDENTIALS_PATH'], scope)
 
     client = gspread.authorize(creds)
     sheet = client.open('Body Index')
@@ -32,6 +32,8 @@ def load_data() -> pd.DataFrame:
     df['root_metabolism'] = df['Root Metabolism'].astype('float64')
     df = df[
         ['timestamp', 'weight', 'fat_percentage', 'muscle_percentage', 'root_metabolism', 'muscle_mass', 'fat_mass']]
+    df['timestamp'] = pd.to_datetime(
+        df['timestamp'].dt.year * 10000 + df['timestamp'].dt.month * 100 + df['timestamp'].dt.day, format='%Y%m%d')
     df.set_index('timestamp', inplace=True)
 
     return df
