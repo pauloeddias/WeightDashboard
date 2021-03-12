@@ -6,6 +6,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from oauth2client.service_account import ServiceAccountCredentials
 from sklearn.linear_model import LinearRegression
+import json
 
 
 def load_data() -> pd.DataFrame:
@@ -13,11 +14,11 @@ def load_data() -> pd.DataFrame:
 
     fil = os.environ['GOOGLE_CREDENTIALS']
     print('\n\n\n\n\n')
-    print(fil)
+    print(json.load(fil))
     print('\n\n\n\n\n')
 
-    # creds = ServiceAccountCredentials.from_json_keyfile_name(fil, scope)
-    creds = ServiceAccountCredentials.from_json(fil,scope)
+    creds = ServiceAccountCredentials.from_json_keyfile_name(fil, scope)
+    # creds = ServiceAccountCredentials.from_json(fil,scope)
 
     client = gspread.authorize(creds)
     sheet = client.open('Body Index')
