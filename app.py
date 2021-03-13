@@ -26,6 +26,7 @@ app.layout = html.Div(children=[
         initial_visible_month=datetime.now() - relativedelta.relativedelta(months=3),
         start_date=datetime.now() - relativedelta.relativedelta(months=3),
         end_date=datetime.now(),
+        display_format='YYYY/MM/DD',
         style={'display': 'flex', 'flex-direction': 'row', 'justify-content': 'center'}
     ),
     html.Div([
