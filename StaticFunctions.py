@@ -60,7 +60,7 @@ def months_to_goal_fat_percentage(goal_percentage: float, df: pd.DataFrame) -> p
     return df
 
 
-def make_line_plot(x, y, title, xaxis_title, yaxis_title, mode='markers') -> go.Figure():
+def make_line_plot(x, y, title, xaxis_title, yaxis_title, mode='markers') -> go.Figure:
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=x, y=y, mode=mode))
     fig.update_layout(
@@ -70,3 +70,26 @@ def make_line_plot(x, y, title, xaxis_title, yaxis_title, mode='markers') -> go.
         transition_duration=500
     )
     return fig
+
+
+def make_plots(data: pd.DataFrame, resampled_data: pd.DataFrame) -> [go.Figure, go.Figure, go.Figure, go.Figure,
+                                                                     go.Figure, go.Figure]:
+    weight = make_line_plot(x=data.index, y=data['weight'], title='Weight', xaxis_title='Date',
+                            yaxis_title="Weight (Kg)")
+
+    fat_percentage = make_line_plot(x=data.index, y=data['fat_percentage'], title='Fat Percentage', xaxis_title='Date',
+                                    yaxis_title="Fat Percentage")
+    muscle_percentage = make_line_plot(x=data.index, y=data['muscle_percentage'], title='Muscle Percentage',
+                                       xaxis_title='Date',
+                                       yaxis_title="Muscle Percentage")
+    fat_mass = make_line_plot(x=data.index, y=data['fat_mass'], title='Fat Mass', xaxis_title='Date',
+                              yaxis_title="Fat Mass (Kg)")
+    muscle_percentage = make_line_plot(x=data.index, y=data['muscle_mass'], title='Muscle Mass', xaxis_title='Date',
+                                       yaxis_title="Muscle Mass (Kg)")
+
+    months_to_goal_percentage = make_line_plot(x=resampled_data.index, y=resampled_data['months_to_goal_percentage'],
+                                               mode='markers',
+                                               title='Months To Goal Percentage', xaxis_title='Date',
+                                               yaxis_title="Months To Goal Percentage")
+
+    return weight, fat_percentage, fat_mass, muscle_percentage, muscle_percentage, months_to_goal_percentage

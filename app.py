@@ -19,20 +19,7 @@ date_max = df.index[-1]
 d2 = resample_every_day(df)
 d2 = months_to_goal_fat_percentage(goal_percentage=8, df=d2)
 
-weight = make_line_plot(x=df.index, y=df['weight'], title='Weight', xaxis_title='Date',
-                        yaxis_title="Weight (Kg)")
-
-fat_percentage = make_line_plot(x=df.index, y=df['fat_percentage'], title='Fat Percentage', xaxis_title='Date',
-                                yaxis_title="Fat Percentage")
-muscle_percentage = make_line_plot(x=df.index, y=df['muscle_percentage'], title='Muscle Percentage', xaxis_title='Date',
-                                   yaxis_title="Muscle Percentage")
-months_to_goal_percentage = make_line_plot(x=d2.index, y=d2['months_to_goal_percentage'], mode='markers',
-                                           title='Months To Goal Percentage', xaxis_title='Date',
-                                           yaxis_title="Months To Goal Percentage")
-fat_mass = make_line_plot(x=df.index, y=df['fat_mass'], title='Fat Mass', xaxis_title='Date',
-                          yaxis_title="Fat Mass (Kg)")
-muscle_mass = make_line_plot(x=df.index, y=df['muscle_mass'], title='Muscle Mass', xaxis_title='Date',
-                             yaxis_title="Muscle Mass (Kg)")
+weight, fat_percentage, fat_mass, muscle_percentage, muscle_mass, months_to_goal_percentage = make_plots(df, d2)
 
 app.layout = html.Div(children=[
     html.H1(children='Body Measurements',
@@ -86,28 +73,13 @@ app.layout = html.Div(children=[
      dash.dependencies.Output('months_to_goal_percentage', 'figure')],
     [dash.dependencies.Input('my-date-picker-range', 'start_date'),
      dash.dependencies.Input('my-date-picker-range', 'end_date')])
-def update_figure(start_date=date_min, end_date=date_max):
+def update_figure(start_date, end_date):
     filtered_df = df[(df.index >= start_date) & (df.index <= end_date)]
     month_df = d2[(d2.index >= start_date) & (d2.index <= end_date)]
 
-    fp = make_line_plot(x=filtered_df.index, y=filtered_df['fat_percentage'], title='Fat Percentage',
-                        xaxis_title='Date',
-                        yaxis_title="Fat Percentage")
-    mp = make_line_plot(x=filtered_df.index, y=filtered_df['muscle_percentage'], title='Muscle Percentage',
-                        xaxis_title='Date',
-                        yaxis_title="Muscle Percentage")
-    fm = make_line_plot(x=filtered_df.index, y=filtered_df['fat_mass'], title='Fat Mass', xaxis_title='Date',
-                        yaxis_title="Fat Mass (Kg)")
-    mm = make_line_plot(x=filtered_df.index, y=filtered_df['muscle_mass'], title='Muscle Mass', xaxis_title='Date',
-                        yaxis_title="Muscle Mass (Kg)")
-    we = make_line_plot(x=filtered_df.index, y=filtered_df['weight'], title='Weight', xaxis_title='Date',
-                        yaxis_title="Weight (Kg)")
-    mtgp = make_line_plot(x=month_df.index, y=month_df['months_to_goal_percentage'], mode='markers',
-                          title='Months To Goal Percentage', xaxis_title='Date',
-                          yaxis_title="Months To Goal Percentage")
+    we, fp, fm, mp, mm, mtgp = make_plots(filtered_df, month_df)
 
     return we, fp, fm, mp, mm, mtgp
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)
