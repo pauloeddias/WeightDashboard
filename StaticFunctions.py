@@ -93,3 +93,10 @@ def make_plots(data: pd.DataFrame, resampled_data: pd.DataFrame) -> [go.Figure, 
                                                yaxis_title="Months To Goal Percentage")
 
     return weight, fat_percentage, fat_mass, muscle_percentage, muscle_percentage, months_to_goal_percentage
+
+
+def get_dataframes() -> [pd.DataFrame, pd.DataFrame]:
+    df = load_data()
+    d2 = resample_every_day(df)
+    d2 = months_to_goal_fat_percentage(goal_percentage=8, df=d2)
+    return df, d2
